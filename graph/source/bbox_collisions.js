@@ -1,5 +1,7 @@
 function bbox_collisions(bbox)
 {
+	"use strict";
+
 	var nodes, boxes, strength = 10;
 	function force()
 	{

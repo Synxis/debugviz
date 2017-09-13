@@ -1,5 +1,7 @@
 function flow_layout(graph)
 {
+	"use strict";
+
 	var coords = graph.nodes.map(n => { return { name: n.name, x: NaN, y: NaN }; });
 	function successors(node_name)
 	{

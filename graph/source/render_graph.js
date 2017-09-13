@@ -1,5 +1,7 @@
 function setup_graph_rendering(graph)
 {
+	"use strict";
+
 	var node_width = 170;
 	var node_padding = 10;
 	var slot_height = 40;
