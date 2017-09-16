@@ -20,7 +20,7 @@
 		</style>
 	</svg>
 	<script>
-		var graph = {
+		setup_graph_rendering({
 			nodes: [
 				{ "name": "plop", "inputs": [], "outputs": ["val"] },
 				{ "name": "modif", "inputs": ["vv", "uu", "yy"], "outputs": ["value"] },
@@ -34,8 +34,6 @@
 				{ "out": "cst", "out_slot": "v", "in": "add", "in_slot": "x" },
 				{ "out": "add", "out_slot": "value", "in": "final", "in_slot": "w" }
 			]
-		};
-
-		setup_graph_rendering(graph);
+		});
 	</script>
 </body>
