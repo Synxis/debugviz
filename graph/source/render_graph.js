@@ -1,6 +1,33 @@
+// BSD 3-Clause Licence //////////////////////////////////////////////////////////////////////// //
+// Copyright (c) 2017 Thibault Lescoat, All rights reserved.                                     //
+//                                                                                               //
+// Redistribution and use in source and binary forms, with or without modification, are          //
+// permitted provided that the following conditions are met:                                     //
+//                                                                                               //
+// * Redistributions of source code must retain the above copyright notice, this list of         //
+//   conditions and the following disclaimer.                                                    //
+//                                                                                               //
+// * Redistributions in binary form must reproduce the above copyright notice, this list of      //
+//   conditions and the following disclaimer in the documentation and/or other materials         //
+//   provided with the distribution.                                                             //
+//                                                                                               //
+// * Neither the name of the copyright holder nor the names of its contributors may be used to   //
+//   endorse or promote products derived from this software without specific prior written       //
+//   permission.                                                                                 //
+//                                                                                               //
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS   //
+// OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF               //
+// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE    //
+// COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,     //
+// EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE //
+// GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED    //
+// AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING     //
+// NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF          //
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                                    //
+// ///////////////////////////////////////////////////////////////////////////////////////////// //
 function setup_graph_rendering(graph)
 {
-	"use strict";
+	'use strict';
 
 	var node_width = 170;
 	var node_padding = 10;
@@ -11,20 +38,20 @@ function setup_graph_rendering(graph)
 	var separator_count = 8;
 	var edge_strength = 60;
 
-	var svg = document.getElementsByTagName("svg")[0];
+	var svg = document.getElementsByTagName('svg')[0];
 	function create_svg(parent, tag)
 	{
-		var e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+		var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
 		parent.appendChild(e);
 		return e;
 	}
-	var root = create_svg(svg, "g");
+	var root = create_svg(svg, 'g');
 	function svg_point(x, y) { var p = svg.createSVGPoint(); p.x = x; p.y = y; return p; }
 	var screen_to_root = (x, y) => svg_point(x, y).matrixTransform(root.getCTM().inverse());
 
 	// Setup zoom
 	var view_x = 0, view_y = 0, view_scale = 1;
-	function update_view() { root.setAttribute("transform", "translate(" + view_x + ", " + view_y + ") scale(" + view_scale + ")"); }
+	function update_view() { root.setAttribute('transform', 'translate(' + view_x + ', ' + view_y + ') scale(' + view_scale + ')'); }
 	var zoom_drag_pos = null, zoom_init_pos = null;
 	var drag_mouse_pos = null, drag_node_pos = null;
 	function move_svg(e)
@@ -75,18 +102,18 @@ function setup_graph_rendering(graph)
 
 	function setup_node(node)
 	{
-		var g = create_svg(root, "g");
-		g.setAttribute("class", "node");
-		var r = create_svg(g, "rect");
-		r.setAttribute("width", node_width);
-		r.setAttribute("height", title_height + separator_height + slot_height * Math.max(node.inputs.length, node.outputs.length));
-		var t = create_svg(g, "text");
+		var g = create_svg(root, 'g');
+		g.setAttribute('class', 'node');
+		var r = create_svg(g, 'rect');
+		r.setAttribute('width', node_width);
+		r.setAttribute('height', title_height + separator_height + slot_height * Math.max(node.inputs.length, node.outputs.length));
+		var t = create_svg(g, 'text');
 		t.setAttribute('text-anchor', 'middle');
 		t.setAttribute('dominant-baseline', 'middle');
 		t.setAttribute('x', node_width / 2.0);
 		t.setAttribute('y', title_height / 2.0);
 		t.textContent = node.name;
-		var l = create_svg(g, "line");
+		var l = create_svg(g, 'line');
 		l.setAttribute('x1', slot_radius)
 		l.setAttribute('x2', node_width - slot_radius)
 		l.setAttribute('y1', title_height)
@@ -124,17 +151,17 @@ function setup_graph_rendering(graph)
 		for(var s = 0; s < node.outputs.length; s++) setup_slot(g, node.outputs, s, false);
 		function setup_slot(parent, slots, index, is_input)
 		{
-			var g = create_svg(parent, "g");
-			g.setAttribute("class", is_input ? "input" : "output");
-			g.setAttribute("transform", "translate(" + (is_input ? 0 : node_width / 2) + ", " + (title_height + separator_height + slot_height * index) + ")");
-			var c = create_svg(g, "circle");
+			var g = create_svg(parent, 'g');
+			g.setAttribute('class', is_input ? 'input' : 'output');
+			g.setAttribute('transform', 'translate(' + (is_input ? 0 : node_width / 2) + ', ' + (title_height + separator_height + slot_height * index) + ')');
+			var c = create_svg(g, 'circle');
 			c.setAttribute('cx', is_input ? 0 : node_width / 2.0);
 			c.setAttribute('cy', slot_height / 2.0);
 			c.setAttribute('r', slot_radius);
-			var t = create_svg(g, "text");
+			var t = create_svg(g, 'text');
 			t.setAttribute('x', is_input ? 2 * slot_radius : node_width / 2.0 - 2 * slot_radius);
 			t.setAttribute('y', slot_height / 2.0);
-			t.setAttribute('text-anchor', is_input ? 'start' : "end");
+			t.setAttribute('text-anchor', is_input ? 'start' : 'end');
 			t.setAttribute('dominant-baseline', 'middle');
 			t.textContent = slots[index];
 			slots[index] = { name: t.textContent, element: g };
@@ -142,8 +169,8 @@ function setup_graph_rendering(graph)
 	}
 	function setup_edge(edge)
 	{
-		var e = create_svg(root, "path");
-		e.setAttribute("class", "edge");
+		var e = create_svg(root, 'path');
+		e.setAttribute('class', 'edge');
 		edge.element = e;
 		edge.source = graph.nodes.find(n => n.name === edge.out).outputs.find(s => s.name === edge.out_slot).element;
 		edge.target = graph.nodes.find(n => n.name === edge.in).inputs.find(s => s.name === edge.in_slot).element;
@@ -153,8 +180,8 @@ function setup_graph_rendering(graph)
 	{
 		function center_pos(d)
 		{
-			var c = d.getElementsByTagName("circle")[0];
-			return svg_point(+c.getAttribute("cx"), +c.getAttribute("cy")).matrixTransform(root.getCTM().inverse().multiply(c.getCTM()));
+			var c = d.getElementsByTagName('circle')[0];
+			return svg_point(+c.getAttribute('cx'), +c.getAttribute('cy')).matrixTransform(root.getCTM().inverse().multiply(c.getCTM()));
 		}
 		for(var n of graph.nodes)
 			n.element.setAttribute('transform', 'translate(' + n.x + ',' + n.y + ')');
@@ -162,7 +189,7 @@ function setup_graph_rendering(graph)
 		{
 			var src = center_pos(e.source);
 			var tgt = center_pos(e.target);
-			e.element.setAttribute("d", `M ${src.x} ${src.y} C ${src.x + edge_strength} ${src.y}, ${tgt.x - edge_strength} ${tgt.y}, ${tgt.x} ${tgt.y}`);
+			e.element.setAttribute('d', `M ${src.x} ${src.y} C ${src.x + edge_strength} ${src.y}, ${tgt.x - edge_strength} ${tgt.y}, ${tgt.x} ${tgt.y}`);
 		}
 	}
 	function createSimulation()
