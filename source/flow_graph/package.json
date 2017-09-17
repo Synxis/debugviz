@@ -1,0 +1,10 @@
+{
+	"name": "debugviz-flow_graph",
+	"version": "1.0.0",
+	"license" : "BSD-3-Clause",
+	"dependencies":
+	{
+		"uglify-es": "3",
+		"html-minifier": "3"
+	}
+}

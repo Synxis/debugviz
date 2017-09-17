@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <meta charset='utf-8'>
-<script src="./collisions.js"></script>
-<script src="./layout.js"></script>
-<script src="./render.js"></script>
+<script>%SCRIPT%</script>
 <style>html, body, svg { margin: 0; width: 100%; height: 100%; overflow: hidden; }</style>
-<title>Flow graph</title>
+<title>%CPP_TITLE%</title>
 <body>
 	<svg>
 		<style>
@@ -19,20 +17,4 @@
 			}
 		</style>
 	</svg>
-	<script>
-		setup_graph_rendering({
-			nodes: [
-				{ "name": "plop", "inputs": [], "outputs": ["val"] },
-				{ "name": "modif", "inputs": ["vv", "uu", "yy"], "outputs": ["value"] },
-				{ "name": "cst", "inputs": [], "outputs": ["v"] },
-				{ "name": "add", "inputs": ["x", "y"], "outputs": ["value", "u", "v", "w"] },
-				{ "name": "final", "inputs": ["w"], "outputs": [] }
-			],
-			connections: [
-				{ "out": "plop", "out_slot": "val", "in": "modif", "in_slot": "uu" },
-				{ "out": "modif", "out_slot": "value", "in": "add", "in_slot": "y" },
-				{ "out": "cst", "out_slot": "v", "in": "add", "in_slot": "x" },
-				{ "out": "add", "out_slot": "value", "in": "final", "in_slot": "w" }
-			]
-		});
-	</script>
+	<script>setup_graph_rendering({ %CPP_STRUCTURE% });</script>
