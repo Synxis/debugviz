@@ -26,7 +26,11 @@
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                                    //
 // ///////////////////////////////////////////////////////////////////////////////////////////// //
 #pragma once
+
 #include <iostream>
+
+#ifndef DEBUGVIZ_NO_FLOW_GRAPH
+
 #include <type_traits>
 
 namespace debugviz
@@ -154,3 +158,21 @@ namespace detail
 		return { title, nodes, connections };
 	}
 }
+
+#else
+
+namespace debugviz
+{
+namespace detail
+{
+	struct empty {};
+	std::ostream& operator<<(std::ostream& os, empty) { return os; }
+}
+	template<typename T, typename N, typename C>
+	detail::empty flow_graph(const T&, const N&, const C&) { return {}; }
+
+	template<typename S, typename T, typename N, typename C>
+	S& write_flow_graph(S& s, const T&, const N&, const C&) { return s; }
+}
+
+#endif
